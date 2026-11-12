@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ticket2Wallet: IRCTC to Apple Wallet</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+  <h1>Ticket2Wallet</h1>
+  <p class="sub">Turn an IRCTC e-ticket PDF into an Apple Wallet pass. Everything runs in your browser. Nothing is uploaded anywhere.</p>
+
+  <section class="card">
+    <h2>1. Your signing certificate <span class="tag" id="certState">not loaded</span></h2>
+    <p class="hint">Apple only accepts passes signed with a Pass Type ID certificate from a (paid) Apple Developer account. One time setup, see the README. Files stay on your device.</p>
+    <label>Pass certificate (.p12)<input type="file" id="p12" accept=".p12,.pfx"></label>
+    <label>.p12 password<input type="password" id="p12pw" autocomplete="off"></label>
+    <label>Apple WWDR certificate (G4, .cer)<input type="file" id="wwdr" accept=".cer,.pem,.crt"></label>
+    <label class="row"><input type="checkbox" id="remember"> Remember these in this browser</label>
+    <button id="loadCert" type="button">Load certificate</button>
+    <p class="msg" id="certMsg"></p>
+  </section>
+
+  <section class="card">
+    <h2>2. Upload ticket</h2>
+    <input type="file" id="pdf" accept="application/pdf,image/*">
+    <p class="hint">PDF from IRCTC (or a screenshot of it). We read the details and the QR code from it.</p>
+    <p class="msg" id="pdfMsg"></p>
+  </section>
+
+  <section class="card" id="editCard" hidden>
+    <h2>3. Check details</h2>
+    <div class="grid" id="fields"></div>
+    <label>Passengers (one per line)<textarea id="passengers" rows="3"></textarea></label>
+    <label>QR / barcode content<textarea id="qrdata" rows="2"></textarea></label>
+    <p class="hint" id="qrHint"></p>
+    <button id="make" type="button">Create Wallet pass</button>
+    <p class="msg" id="makeMsg"></p>
+    <a id="dl" class="btn" hidden>Download .pkpass</a>
+  </section>
+</main>
+<script src="vendor/forge.min.js"></script>
+<script src="vendor/jszip.min.js"></script>
+<script src="vendor/pdf.min.js"></script>
+<script src="vendor/jsQR.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
